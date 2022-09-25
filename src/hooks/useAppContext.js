@@ -1,11 +1,12 @@
-import { createContext, useContext } from "react";
-
-const AppContext = createContext();
+import { useContext } from "react";
+import AppContext from "../components/AppContext";
 
 export default function useAppContext() {
-    const [context, setContext] = useContext(AppContext);
+    const x = useContext(AppContext);
+    console.log(x);
+    const [context, setContext] = x;
     return { 
-        value, 
+        value: context, 
         setValue: obj => setContext({...context, ...obj})
     };
 }
