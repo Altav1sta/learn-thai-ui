@@ -20,20 +20,18 @@ export default function SignInSide() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (context.value.isAuthenticated) {
-      navigate('/home');
-    }
-  });
+    if (context.value.userId) navigate('/');
+  }, [context.value.userId, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const data = {
-      email: formData.get('email'),
-      password: formData.get('password'),
-    };
-    const userId = await signIn(data);
-    context.setValue({ isAuthenticated: userId !== null });
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const user = await signIn(email, password);
+    if (user) {
+      context.setValue({ userId: user.id, userEmail: user.email });
+    }
   };
 
   return (

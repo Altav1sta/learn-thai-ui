@@ -2,7 +2,8 @@ import { createContext, useState } from "react"
 
 const AppContext = createContext();
 const DefaultAppContext = {
-    isAuthenticated: false
+    userId: null,
+    userEmail: null
 };
 
 export function AppContextProvider({ children }) {

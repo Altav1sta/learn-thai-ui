@@ -9,12 +9,8 @@ import SignUp from './components/SignUp';
 const getRouter = context => createBrowserRouter([
   {
     path: "/",
-    element: context.IsAuthenticated ? <HomeScreen /> : <SignInSide />,
+    element: <HomeScreen />,
     errorElement: <ErrorPage />
-  },
-  {
-    path: "/home",
-    element: <HomeScreen />
   },
   {
     path: "/signin",

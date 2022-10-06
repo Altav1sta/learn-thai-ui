@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,15 +10,28 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import useAppContext from '../hooks/useAppContext';
+import { signUp } from '../api/endpoints';
 
 export default function SignUp() {
-    const handleSubmit = (event) => {
+    const context = useAppContext();
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (context.value.userId) navigate('/');
+    }, [context.value.userId, navigate]);
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const firstName = data.get('firstName');
+        const lastName = data.get('lastName');
+        const email = data.get('email');
+        const password = data.get('password');
+        const user = await signUp(firstName, lastName, email, password);
+        if (user) {
+            context.setValue({ userId: user.id, userEmail: user.email });
+        }
     };
 
     return (
