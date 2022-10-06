@@ -4,6 +4,7 @@ import useAppContext from "./hooks/useAppContext";
 import ErrorPage from "./components/ErrorPage";
 import HomeScreen from './components/HomeScreen';
 import SignInSide from './components/SignInSide';
+import SignUp from './components/SignUp';
 
 const getRouter = context => createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const getRouter = context => createBrowserRouter([
   {
     path: "/signin",
     element: <SignInSide />
+  },
+  {
+    path: "/signup",
+    element: <SignUp />
   }
 ]);
 
