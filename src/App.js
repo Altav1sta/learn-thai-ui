@@ -5,10 +5,14 @@ import themeDark from "assets/theme-dark";
 import { useMaterialUIController } from "context";
 import { useEffect } from "react";
 import routes from "routes";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Sidenav from "elements/Sidenav";
+import useAppContext from "hooks/useAppContext";
+import SignIn from "layouts/authentication/sign-in";
 
 export default function App() {
+  const navigate = useNavigate();
+  const [appContext] = useAppContext();
   const [controller] = useMaterialUIController();
   const {
     direction,
@@ -34,11 +38,9 @@ export default function App() {
       if (route.collapse) {
         return getRoutes(route.collapse);
       }
-
       if (route.route) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
-
       return null;
     });
 
@@ -47,8 +49,18 @@ export default function App() {
       <CssBaseline />
       {layout === "dashboard" && <Sidenav />}
       <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        {appContext.userId
+          ?
+          <>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </>
+          :
+          <>
+            <Route exact path="/authentication/signin" element={<SignIn />} />
+            <Route path="*" element={<Navigate to="/authentication/signin" />} />
+          </>
+        }
       </Routes>
     </ThemeProvider>
   );

@@ -3,8 +3,5 @@ import AppContext from "../components/AppContext";
 
 export default function useAppContext() {
     const [context, setContext] = useContext(AppContext);
-    return { 
-        value: context, 
-        setValue: obj => setContext({...context, ...obj})
-    };
+    return [context, obj => setContext({ ...context, ...obj })];
 }

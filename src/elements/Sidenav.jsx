@@ -38,7 +38,7 @@ export default function Sidenav() {
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="Learn Thai"
-            routes={routes}
+            routes={routes.filter(x => x.includeInMenu)}
             onMouseEnter={onMouseEnterSidenav}
             onMouseLeave={onMouseLeaveSidenav}
         />
